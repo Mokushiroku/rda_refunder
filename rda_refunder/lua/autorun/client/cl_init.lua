@@ -1,33 +1,29 @@
-/*
-	DO NOT EDIT ANYTING IN THIS FILE, COLORS CONFIGS WILL BE ADDED
-*/
-
+--cl side
 
 local mRDA = {}
 mRDA.Authed = false
 
-
 -- Fade Startup Message
 mRDA.StartUp = {
-"",
-"d s   sb d ss.  d ss    d s.   ",
-"S  S S S S    b S   ~o  S  ~O  ",
-"S   S  S S    P S     b S   `b ",
-"S      S S sS'  S     S S sSSO ",
-"S      S S   S  S     P S    O ",
-"S      S S    S S    S  S    O ",
-"P      P P    P P ss    P    P ",
-"",
+	"",
+	"d s   sb d ss.  d ss    d s.   ",
+	"S  S S S S    b S   ~o  S  ~O  ",
+	"S   S  S S    P S     b S   `b ",
+	"S      S S sS'  S     S S sSSO ",
+	"S      S S   S  S     P S    O ",
+	"S      S S    S S    S  S    O ",
+	"P      P P    P P ss    P    P ",
+	"",
 }
 
 --Splits the color in half serverside, clientside creates a nice fade effect.
-for k,v in pairs(mRDA.StartUp) do
-	MsgC( Color(k * math.Round(255 / #mRDA.StartUp, 0), 255,255), v .. "\n")
+for k,v in pairs( mRDA.StartUp ) do
+	MsgC( Color( k * math.Round( 255 / #mRDA.StartUp, 0), 255, 255 ), v .. "\n" )
 end
 
 
 function mRDA.CreateMenu()
-	if !mRDA.Authed then chat.AddText( color_white, "[mRDA] ", Color(255,126,136), "You are not authenticated!") return end
+	if !mRDA.Authed then chat.AddText( color_white, "[mRDA] ", Color( 255, 126, 136 ), "You are not authenticated!") return end
 	
 	mRDA.PlyArrestTable = {}
 	local PlyIDTable = {}
@@ -60,29 +56,23 @@ function mRDA.CreateMenu()
 	mRDA.Refund:SetText( "Refund Player" )
 	mRDA.Refund:SetPos( 270 - 100, 240 - 90 )
 	
-	
-	/*
-	Functions look better away from the VGUI Creation, personal preference
-	*/
-	
 	-- Painting Functions, using a forloop seemed irrelavant
 	function mRDA.Frame:Paint( w, h ) 
 		surface.SetDrawColor( color_white )
-		surface.DrawRect( 0,0,w,h )
+		surface.DrawRect( 0, 0, w, h )
 		surface.SetDrawColor( color_black )
-		surface.DrawRect( 0,0,w,25 )
-		surface.DrawOutlinedRect( 0,0,w,h )
+		surface.DrawRect( 0, 0, w, 25 )
+		surface.DrawOutlinedRect( 0, 0, w, h )
 	end
 	
-	
-	-- Saves us a few lines and looks tidier
+	-- loopy loop
 	mRDA.MenuTable = { mRDA.Refund, mRDA.ArrestList, mRDA.PlayerList }
 	for k,v in pairs( mRDA.MenuTable ) do
 		function v:Paint( w, h ) 
 			surface.SetDrawColor( color_white )
-			surface.DrawRect( 0,0,w,h )
+			surface.DrawRect( 0, 0, w, h )
 			surface.SetDrawColor( color_black )
-			surface.DrawOutlinedRect( 0,0,w,h )
+			surface.DrawOutlinedRect( 0, 0, w, h )
 		end
 	end
 	
@@ -104,7 +94,7 @@ function mRDA.CreateMenu()
 		
 		net.Start( "mrda_refund" )
 			net.WriteInt( SelectedPly, 32 )
-			net.WriteInt( SelectedArrest, 31 )
+			net.WriteInt( SelectedArrest, 32 )
 		net.SendToServer()
 	end
 end
@@ -122,11 +112,10 @@ hook.Add( "OnPlayerChat", "mRDAMenuHook", mRDA.MenuHook )
 
 net.Receive( "mrda_authed", function()
 	if !mRDA.Authed then
-		chat.AddText( color_white, "[mRDA] ", Color(126,255,136), "You have been Authenticated!")
+		chat.AddText( color_white, "[mRDA] ", Color( 126, 255, 136 ), "You have been Authenticated!" )
 	end
 	
 	mRDA.Authed = true
-	
 end )
 
 
@@ -140,6 +129,5 @@ net.Receive( "mrda_weps", function()
 	for i = 1, Arrested do
 		mRDA.ArrestList:AddChoice( i )
 	end
-	
 end )
 
