@@ -1,4 +1,4 @@
-# Moku's RDA Refunder
-Allow admins to easily refund player's weapons.
+# Garry's Mod RDA Refunder Addon
+For DarkRP-based gamemodes.
 
-old addon from early last year
+Allows admins to return players weapons after being arrested falsely.
